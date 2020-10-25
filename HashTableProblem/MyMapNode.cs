@@ -7,6 +7,7 @@
 namespace HashTableProblem
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Text;
 
@@ -107,7 +108,62 @@ namespace HashTableProblem
                     }
                 }                
             }
-            Console.WriteLine($"Frequency of '{value}'= {count}");
-        }        
+            Console.WriteLine($"Frequency of '{value}'= {count}\n");
+        }
+
+        /// <summary>
+        /// UC 3 : Removes the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public void Remove(V value)
+        {                      
+            foreach (var linkedList in items)
+            {
+                if (linkedList != null)
+                {
+                    bool itemFound = false;
+                    /// Creates an array which can store the required key-value pair
+                    KeyValue<K, V>[] foundItem = new KeyValue<K, V>[linkedList.Count];
+                    int index = -1;
+                    foreach (var kvp in linkedList)
+                    {                        
+                        /// If the kvp contains the entered value
+                        if (kvp.Value.Equals(value))
+                        {
+                            itemFound = true;
+                            index++;
+                            foundItem[index] = kvp;
+                        }
+                    }
+                    /// Removes the items if found
+                    if (itemFound)
+                    {
+                        foreach (var item in foundItem)
+                        {
+                            linkedList.Remove(item);
+                        }
+                    }
+                }                
+            }            
+        }
+
+        /// <summary>
+        /// Displays this contents of hashtable.
+        /// </summary>
+        public void Display()
+        {
+            foreach (var linkedList in items)
+            {
+                if (linkedList != null)
+                {
+                    foreach (var element in linkedList)
+                    {
+                        string result = element.ToString();
+                        if (result != null)
+                            Console.WriteLine(element.Key + " " + element.Value);
+                    }
+                }
+            }
+        }
     }
 }
